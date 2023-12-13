@@ -1,0 +1,1492 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/BigfootSightingsshp_1.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[24.174240735003725,-132.88325839655002],[50.815804111944715,-70.85679718141543]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_EsriImagery_0');
+        map.getPane('pane_EsriImagery_0').style.zIndex = 400;
+        var layer_EsriImagery_0 = L.tileLayer('https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            pane: 'pane_EsriImagery_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+        });
+        layer_EsriImagery_0;
+        map.addLayer(layer_EsriImagery_0);
+        function pop_BigfootSightingsshp_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>The Story</strong><br />' + (feature.properties['observed'] !== null ? autolinker.link(feature.properties['observed'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">county</th>\
+                        <td>' + (feature.properties['county'] !== null ? autolinker.link(feature.properties['county'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">state</th>\
+                        <td>' + (feature.properties['state'] !== null ? autolinker.link(feature.properties['state'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Season</th>\
+                        <td>' + (feature.properties['season'] !== null ? autolinker.link(feature.properties['season'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Moon Visibility</th>\
+                        <td>' + (feature.properties['moon_phase'] !== null ? autolinker.link(feature.properties['moon_phase'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Date</th>\
+                        <td>' + (feature.properties['Date_1'] !== null ? autolinker.link(feature.properties['Date_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Year</th>\
+                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_BigfootSightingsshp_1_0() {
+            return {
+                pane: 'pane_BigfootSightingsshp_1',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(196,60,57,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_BigfootSightingsshp_1');
+        map.getPane('pane_BigfootSightingsshp_1').style.zIndex = 401;
+        map.getPane('pane_BigfootSightingsshp_1').style['mix-blend-mode'] = 'normal';
+        var layer_BigfootSightingsshp_1 = new L.geoJson(json_BigfootSightingsshp_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_BigfootSightingsshp_1',
+            layerName: 'layer_BigfootSightingsshp_1',
+            pane: 'pane_BigfootSightingsshp_1',
+            onEachFeature: pop_BigfootSightingsshp_1,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_BigfootSightingsshp_1_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_BigfootSightingsshp_1);
+        map.addLayer(layer_BigfootSightingsshp_1);
+        setBounds();
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"Date_1": "date","Year": "int","moon_phase": "real","state": "str","county": "str","season": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Date_1_date1 = document.createElement("div");
+            div_Date_1_date1.id = "div_Date_1_date1";
+            div_Date_1_date1.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Date_1_date1);
+            dat_Date_1_date1 = document.createElement('input');
+            dat_Date_1_date1.type = "text";
+            dat_Date_1_date1.id = "dat_Date_1_date1";
+            div_Date_1_date1.appendChild(dat_Date_1_date1);
+            var lab_Date_1_date1 = document.createElement('div');
+            lab_Date_1_date1.innerHTML  = 'Date_1 from';
+            lab_Date_1_date1.className = 'filterlabel';
+            document.getElementById("div_Date_1_date1").appendChild(
+                lab_Date_1_date1);
+            var reset_Date_1_date1 = document.createElement('div');
+            reset_Date_1_date1.innerHTML = "clear";
+            reset_Date_1_date1.className = 'filterlabel';
+            reset_Date_1_date1.onclick = function() {
+                tail.DateTime("#dat_Date_1_date1", {
+                    dateStart: -3162762000000,
+                    dateEnd: 1677538800000,
+                    dateFormat: 'YYYY-mm-dd',
+                    timeFormat: false,
+                    today: false,
+                    weekStart: 1,
+                    position: "left",
+                    closeButton: true,
+                    timeStepMinutes:1,
+                    timeStepSeconds: 1
+                }).selectDate(1869,10-1,11,0,0,0);
+                tail.DateTime("#dat_Date_1_date1").reload()
+            }
+            document.getElementById("div_Date_1_date1").appendChild(
+                reset_Date_1_date1);
+            document.addEventListener("DOMContentLoaded", function(){
+                tail.DateTime("#dat_Date_1_date1", {
+                    dateStart: -3162762000000,
+                    dateEnd: 1677538800000,
+                    dateFormat: 'YYYY-mm-dd',
+                    timeFormat: false,
+                    today: false,
+                    weekStart: 1,
+                    position: "left",
+                    closeButton: true,
+                    timeStepMinutes:1,
+                    timeStepSeconds: 1
+                }).selectDate(1869,10-1,11,0,0,0);
+                tail.DateTime("#dat_Date_1_date1").reload()
+                tail.DateTime("#dat_Date_1_date2", {
+                    dateStart: -3162762000000,
+                    dateEnd: 1677538800000,
+                    dateFormat: 'YYYY-mm-dd',
+                    timeFormat: false,
+                    today: false,
+                    weekStart: 1,
+                    position: "left",
+                    closeButton: true,
+                    timeStepMinutes:1,
+                    timeStepSeconds: 1
+                }).selectDate(2023,2-1,28,0,0,0);
+                tail.DateTime("#dat_Date_1_date2").reload()
+                filterFunc()
+                dat_Date_1_date1.onchange = function(){filterFunc()};
+                dat_Date_1_date2.onchange = function(){filterFunc()};
+            });
+            var div_Date_1_date2 = document.createElement("div");
+            div_Date_1_date2.id = "div_Date_1_date2";
+            div_Date_1_date2.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Date_1_date2);
+            dat_Date_1_date2 = document.createElement('input');
+            dat_Date_1_date2.type = "text";
+            dat_Date_1_date2.id = "dat_Date_1_date2";
+            div_Date_1_date2.appendChild(dat_Date_1_date2);
+            var lab_Date_1_date2 = document.createElement('div');
+            lab_Date_1_date2.innerHTML  = 'Date_1 till';
+            lab_Date_1_date2.className = 'filterlabel';
+            document.getElementById("div_Date_1_date2")
+              .appendChild(lab_Date_1_date2);
+            var reset_Date_1_date2 = document.createElement('div');
+            reset_Date_1_date2.innerHTML = "clear";
+            reset_Date_1_date2.className = 'filterlabel';
+            reset_Date_1_date2.onclick = function() {
+                tail.DateTime("#dat_Date_1_date2", {
+                    dateStart: -3162762000000,
+                    dateEnd: 1677538800000,
+                    dateFormat: 'YYYY-mm-dd',
+                    timeFormat: false,
+                    today: false,
+                    weekStart: 1,
+                    position: "left",
+                    closeButton: true,
+                    timeStepMinutes:1,
+                    timeStepSeconds: 1
+                }).selectDate(2023,2-1,28,0,0,0);
+                tail.DateTime("#dat_Date_1_date2").reload()
+            }
+            document.getElementById("div_Date_1_date2").appendChild(
+                reset_Date_1_date2);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Year = document.createElement("div");
+            div_Year.id = "div_Year";
+            div_Year.className = "slider";
+            document.getElementById("menu").appendChild(div_Year);
+            var lab_Year = document.createElement('div');
+            lab_Year.innerHTML  = 'Year: <span id="val_Year"></span>';
+            lab_Year.className = 'filterlabel';
+            document.getElementById("menu").appendChild(lab_Year);
+            var reset_Year = document.createElement('div');
+            reset_Year.innerHTML = 'clear filter';
+            reset_Year.className = 'filterlabel';
+            lab_Year.className = 'filterlabel';
+            reset_Year.onclick = function() {
+                sel_Year.noUiSlider.reset();
+            };
+            document.getElementById("menu").appendChild(reset_Year);
+            var sel_Year = document.getElementById('div_Year');
+            noUiSlider.create(sel_Year, {
+                connect: true,
+                start: [1869, 2023],
+                step: 1,
+                format: wNumb({
+                    decimals: 0,
+                    }),
+                range: {
+                min: 1869,
+                max: 2023
+                }
+            });
+            sel_Year.noUiSlider.on('update', function (values) {
+            filterVals =[];
+            for (value in values){
+            filterVals.push(parseInt(value))
+            }
+            val_Year = document.getElementById('val_Year');
+            val_Year.innerHTML = values.join(' - ');
+                filterFunc()
+            });
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_moon_phase = document.createElement("div");
+            div_moon_phase.id = "div_moon_phase";
+            div_moon_phase.className = "slider";
+            document.getElementById("menu").appendChild(div_moon_phase);
+            var lab_moon_phase = document.createElement('div');
+            lab_moon_phase.innerHTML  = 'moon_phase: <span id="val_moon_phase"></span>';
+            lab_moon_phase.className = 'filterlabel';
+            document.getElementById("menu").appendChild(lab_moon_phase);
+            var reset_moon_phase = document.createElement('div');
+            reset_moon_phase.innerHTML = 'clear filter';
+            reset_moon_phase.className = 'filterlabel';
+            lab_moon_phase.className = 'filterlabel';
+            reset_moon_phase.onclick = function() {
+                sel_moon_phase.noUiSlider.reset();
+            };
+            document.getElementById("menu").appendChild(reset_moon_phase);
+            var sel_moon_phase = document.getElementById('div_moon_phase');
+            noUiSlider.create(sel_moon_phase, {
+                connect: true,
+                start: [0.02, 0.98],
+                range: {
+                min: 0.02,
+                max: 0.98
+                }
+            });
+            sel_moon_phase.noUiSlider.on('update', function (values) {
+            val_moon_phase = document.getElementById('val_moon_phase');
+            val_moon_phase.innerHTML = values.join(' - ');
+                filterFunc()
+            });
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_state = document.createElement('div');
+            div_state.id = "div_state";
+            div_state.className= "filterselect";
+            document.getElementById("menu").appendChild(div_state);
+            sel_state = document.createElement('select');
+            sel_state.multiple = true;
+            sel_state.size = 10;
+            sel_state.id = "sel_state";
+            var state_options_str = "<option value='' unselected></option>";
+            sel_state.onchange = function(){filterFunc()};
+            state_options_str  += '<option value="Alabama">Alabama</option>';
+            state_options_str  += '<option value="Alaska">Alaska</option>';
+            state_options_str  += '<option value="Arizona">Arizona</option>';
+            state_options_str  += '<option value="Arkansas">Arkansas</option>';
+            state_options_str  += '<option value="California">California</option>';
+            state_options_str  += '<option value="Colorado">Colorado</option>';
+            state_options_str  += '<option value="Connecticut">Connecticut</option>';
+            state_options_str  += '<option value="Delaware">Delaware</option>';
+            state_options_str  += '<option value="Florida">Florida</option>';
+            state_options_str  += '<option value="Georgia">Georgia</option>';
+            state_options_str  += '<option value="Idaho">Idaho</option>';
+            state_options_str  += '<option value="Illinois">Illinois</option>';
+            state_options_str  += '<option value="Indiana">Indiana</option>';
+            state_options_str  += '<option value="Iowa">Iowa</option>';
+            state_options_str  += '<option value="Kansas">Kansas</option>';
+            state_options_str  += '<option value="Kentucky">Kentucky</option>';
+            state_options_str  += '<option value="Louisiana">Louisiana</option>';
+            state_options_str  += '<option value="Maine">Maine</option>';
+            state_options_str  += '<option value="Maryland">Maryland</option>';
+            state_options_str  += '<option value="Massachusetts">Massachusetts</option>';
+            state_options_str  += '<option value="Michigan">Michigan</option>';
+            state_options_str  += '<option value="Minnesota">Minnesota</option>';
+            state_options_str  += '<option value="Mississippi">Mississippi</option>';
+            state_options_str  += '<option value="Missouri">Missouri</option>';
+            state_options_str  += '<option value="Montana">Montana</option>';
+            state_options_str  += '<option value="Nebraska">Nebraska</option>';
+            state_options_str  += '<option value="Nevada">Nevada</option>';
+            state_options_str  += '<option value="New Hampshire">New Hampshire</option>';
+            state_options_str  += '<option value="New Jersey">New Jersey</option>';
+            state_options_str  += '<option value="New Mexico">New Mexico</option>';
+            state_options_str  += '<option value="New York">New York</option>';
+            state_options_str  += '<option value="North Carolina">North Carolina</option>';
+            state_options_str  += '<option value="North Dakota">North Dakota</option>';
+            state_options_str  += '<option value="Ohio">Ohio</option>';
+            state_options_str  += '<option value="Oklahoma">Oklahoma</option>';
+            state_options_str  += '<option value="Oregon">Oregon</option>';
+            state_options_str  += '<option value="Pennsylvania">Pennsylvania</option>';
+            state_options_str  += '<option value="Rhode Island">Rhode Island</option>';
+            state_options_str  += '<option value="South Carolina">South Carolina</option>';
+            state_options_str  += '<option value="South Dakota">South Dakota</option>';
+            state_options_str  += '<option value="Tennessee">Tennessee</option>';
+            state_options_str  += '<option value="Texas">Texas</option>';
+            state_options_str  += '<option value="Utah">Utah</option>';
+            state_options_str  += '<option value="Vermont">Vermont</option>';
+            state_options_str  += '<option value="Virginia">Virginia</option>';
+            state_options_str  += '<option value="Washington">Washington</option>';
+            state_options_str  += '<option value="West Virginia">West Virginia</option>';
+            state_options_str  += '<option value="Wisconsin">Wisconsin</option>';
+            state_options_str  += '<option value="Wyoming">Wyoming</option>';
+            sel_state.innerHTML = state_options_str;
+            div_state.appendChild(sel_state);
+            var lab_state = document.createElement('div');
+            lab_state.innerHTML = 'state';
+            lab_state.className = 'filterlabel';
+            div_state.appendChild(lab_state);
+            var reset_state = document.createElement('div');
+            reset_state.innerHTML = 'clear filter';
+            reset_state.className = 'filterlabel';
+            reset_state.onclick = function() {
+                var options = document.getElementById("sel_state").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_state.appendChild(reset_state);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_county = document.createElement('div');
+            div_county.id = "div_county";
+            div_county.className= "filterselect";
+            document.getElementById("menu").appendChild(div_county);
+            sel_county = document.createElement('select');
+            sel_county.multiple = true;
+            sel_county.size = 10;
+            sel_county.id = "sel_county";
+            var county_options_str = "<option value='' unselected></option>";
+            sel_county.onchange = function(){filterFunc()};
+            county_options_str  += '<option value="Accomack County">Accomack County</option>';
+            county_options_str  += '<option value="Adams County">Adams County</option>';
+            county_options_str  += '<option value="Alachua County">Alachua County</option>';
+            county_options_str  += '<option value="Alameda County">Alameda County</option>';
+            county_options_str  += '<option value="Alamosa County">Alamosa County</option>';
+            county_options_str  += '<option value="Alcona County">Alcona County</option>';
+            county_options_str  += '<option value="Alexander County">Alexander County</option>';
+            county_options_str  += '<option value="Alger County">Alger County</option>';
+            county_options_str  += '<option value="Allegan County">Allegan County</option>';
+            county_options_str  += '<option value="Allegany County">Allegany County</option>';
+            county_options_str  += '<option value="Allegheny County">Allegheny County</option>';
+            county_options_str  += '<option value="Allen County">Allen County</option>';
+            county_options_str  += '<option value="Allen Parish">Allen Parish</option>';
+            county_options_str  += '<option value="Allendale County">Allendale County</option>';
+            county_options_str  += '<option value="Alpena County">Alpena County</option>';
+            county_options_str  += '<option value="Alpine County">Alpine County</option>';
+            county_options_str  += '<option value="Amador County">Amador County</option>';
+            county_options_str  += '<option value="Amelia County">Amelia County</option>';
+            county_options_str  += '<option value="Amherst County">Amherst County</option>';
+            county_options_str  += '<option value="Amite County">Amite County</option>';
+            county_options_str  += '<option value="Anchorage County">Anchorage County</option>';
+            county_options_str  += '<option value="Anderson County">Anderson County</option>';
+            county_options_str  += '<option value="Andrew County">Andrew County</option>';
+            county_options_str  += '<option value="Angelina County">Angelina County</option>';
+            county_options_str  += '<option value="Anne Arundel County">Anne Arundel County</option>';
+            county_options_str  += '<option value="Anoka County">Anoka County</option>';
+            county_options_str  += '<option value="Apache County">Apache County</option>';
+            county_options_str  += '<option value="Archuleta County">Archuleta County</option>';
+            county_options_str  += '<option value="Arenac County">Arenac County</option>';
+            county_options_str  += '<option value="Ascension Parish">Ascension Parish</option>';
+            county_options_str  += '<option value="Ashe County">Ashe County</option>';
+            county_options_str  += '<option value="Ashland County">Ashland County</option>';
+            county_options_str  += '<option value="Ashtabula County">Ashtabula County</option>';
+            county_options_str  += '<option value="Athens County">Athens County</option>';
+            county_options_str  += '<option value="Atkinson County">Atkinson County</option>';
+            county_options_str  += '<option value="Atoka County">Atoka County</option>';
+            county_options_str  += '<option value="Attala County">Attala County</option>';
+            county_options_str  += '<option value="Augusta County">Augusta County</option>';
+            county_options_str  += '<option value="Autauga County">Autauga County</option>';
+            county_options_str  += '<option value="Avery County">Avery County</option>';
+            county_options_str  += '<option value="Avoyelles Parish">Avoyelles Parish</option>';
+            county_options_str  += '<option value="Baker County">Baker County</option>';
+            county_options_str  += '<option value="Baldwin County">Baldwin County</option>';
+            county_options_str  += '<option value="Ballard County">Ballard County</option>';
+            county_options_str  += '<option value="Baltimore County">Baltimore County</option>';
+            county_options_str  += '<option value="Baraga County">Baraga County</option>';
+            county_options_str  += '<option value="Barbour County">Barbour County</option>';
+            county_options_str  += '<option value="Barnstable County">Barnstable County</option>';
+            county_options_str  += '<option value="Barnwell County">Barnwell County</option>';
+            county_options_str  += '<option value="Barren County">Barren County</option>';
+            county_options_str  += '<option value="Barron County">Barron County</option>';
+            county_options_str  += '<option value="Barry County">Barry County</option>';
+            county_options_str  += '<option value="Bartholomew County">Bartholomew County</option>';
+            county_options_str  += '<option value="Bartow County">Bartow County</option>';
+            county_options_str  += '<option value="Bath County">Bath County</option>';
+            county_options_str  += '<option value="Baxter County">Baxter County</option>';
+            county_options_str  += '<option value="Bay County">Bay County</option>';
+            county_options_str  += '<option value="Bayfield County">Bayfield County</option>';
+            county_options_str  += '<option value="Bear Lake County">Bear Lake County</option>';
+            county_options_str  += '<option value="Beaufort County">Beaufort County</option>';
+            county_options_str  += '<option value="Beaver County">Beaver County</option>';
+            county_options_str  += '<option value="Beaverhead County">Beaverhead County</option>';
+            county_options_str  += '<option value="Bedford County">Bedford County</option>';
+            county_options_str  += '<option value="Bell County">Bell County</option>';
+            county_options_str  += '<option value="Belmont County">Belmont County</option>';
+            county_options_str  += '<option value="Beltrami County">Beltrami County</option>';
+            county_options_str  += '<option value="Benewah County">Benewah County</option>';
+            county_options_str  += '<option value="Bennington County">Bennington County</option>';
+            county_options_str  += '<option value="Benton County">Benton County</option>';
+            county_options_str  += '<option value="Benzie County">Benzie County</option>';
+            county_options_str  += '<option value="Berkeley County">Berkeley County</option>';
+            county_options_str  += '<option value="Berkshire County">Berkshire County</option>';
+            county_options_str  += '<option value="Berrien County">Berrien County</option>';
+            county_options_str  += '<option value="Bertie County">Bertie County</option>';
+            county_options_str  += '<option value="Bexar County">Bexar County</option>';
+            county_options_str  += '<option value="Bibb County">Bibb County</option>';
+            county_options_str  += '<option value="Big Horn County">Big Horn County</option>';
+            county_options_str  += '<option value="Blount County">Blount County</option>';
+            county_options_str  += '<option value="Boise County">Boise County</option>';
+            county_options_str  += '<option value="Bolivar County">Bolivar County</option>';
+            county_options_str  += '<option value="Bond County">Bond County</option>';
+            county_options_str  += '<option value="Bonner County">Bonner County</option>';
+            county_options_str  += '<option value="Bonneville County">Bonneville County</option>';
+            county_options_str  += '<option value="Boone County">Boone County</option>';
+            county_options_str  += '<option value="Bosque County">Bosque County</option>';
+            county_options_str  += '<option value="Botetourt County">Botetourt County</option>';
+            county_options_str  += '<option value="Boulder County">Boulder County</option>';
+            county_options_str  += '<option value="Bourbon County">Bourbon County</option>';
+            county_options_str  += '<option value="Bowie County">Bowie County</option>';
+            county_options_str  += '<option value="Boyd County">Boyd County</option>';
+            county_options_str  += '<option value="Bradford County">Bradford County</option>';
+            county_options_str  += '<option value="Bradley County">Bradley County</option>';
+            county_options_str  += '<option value="Brantley County">Brantley County</option>';
+            county_options_str  += '<option value="Breathitt County">Breathitt County</option>';
+            county_options_str  += '<option value="Brevard County">Brevard County</option>';
+            county_options_str  += '<option value="Bristol Bay County">Bristol Bay County</option>';
+            county_options_str  += '<option value="Bristol County">Bristol County</option>';
+            county_options_str  += '<option value="Broadwater County">Broadwater County</option>';
+            county_options_str  += '<option value="Brooke County">Brooke County</option>';
+            county_options_str  += '<option value="Brooks County">Brooks County</option>';
+            county_options_str  += '<option value="Broward County">Broward County</option>';
+            county_options_str  += '<option value="Brown County">Brown County</option>';
+            county_options_str  += '<option value="Brunswick County">Brunswick County</option>';
+            county_options_str  += '<option value="Buchanan County">Buchanan County</option>';
+            county_options_str  += '<option value="Bucks County">Bucks County</option>';
+            county_options_str  += '<option value="Bulloch County">Bulloch County</option>';
+            county_options_str  += '<option value="Buncombe County">Buncombe County</option>';
+            county_options_str  += '<option value="Burke County">Burke County</option>';
+            county_options_str  += '<option value="Burleson County">Burleson County</option>';
+            county_options_str  += '<option value="Burlington County">Burlington County</option>';
+            county_options_str  += '<option value="Burnett County">Burnett County</option>';
+            county_options_str  += '<option value="Butler County">Butler County</option>';
+            county_options_str  += '<option value="Butte County">Butte County</option>';
+            county_options_str  += '<option value="Butts County">Butts County</option>';
+            county_options_str  += '<option value="Cabell County">Cabell County</option>';
+            county_options_str  += '<option value="Cache County">Cache County</option>';
+            county_options_str  += '<option value="Caddo County">Caddo County</option>';
+            county_options_str  += '<option value="Caddo Parish">Caddo Parish</option>';
+            county_options_str  += '<option value="Calaveras County">Calaveras County</option>';
+            county_options_str  += '<option value="Caldwell County">Caldwell County</option>';
+            county_options_str  += '<option value="Calhoun County">Calhoun County</option>';
+            county_options_str  += '<option value="Callaway County">Callaway County</option>';
+            county_options_str  += '<option value="Camas County">Camas County</option>';
+            county_options_str  += '<option value="Cambria County">Cambria County</option>';
+            county_options_str  += '<option value="Camden County">Camden County</option>';
+            county_options_str  += '<option value="Cameron County">Cameron County</option>';
+            county_options_str  += '<option value="Campbell County">Campbell County</option>';
+            county_options_str  += '<option value="Cape May County">Cape May County</option>';
+            county_options_str  += '<option value="Carbon County">Carbon County</option>';
+            county_options_str  += '<option value="Carlton County">Carlton County</option>';
+            county_options_str  += '<option value="Caroline County">Caroline County</option>';
+            county_options_str  += '<option value="Carroll County">Carroll County</option>';
+            county_options_str  += '<option value="Carter County">Carter County</option>';
+            county_options_str  += '<option value="Carteret County">Carteret County</option>';
+            county_options_str  += '<option value="Cascade County">Cascade County</option>';
+            county_options_str  += '<option value="Casey County">Casey County</option>';
+            county_options_str  += '<option value="Cass County">Cass County</option>';
+            county_options_str  += '<option value="Cassia County">Cassia County</option>';
+            county_options_str  += '<option value="Cattaraugus County">Cattaraugus County</option>';
+            county_options_str  += '<option value="Cedar County">Cedar County</option>';
+            county_options_str  += '<option value="Chaffee County">Chaffee County</option>';
+            county_options_str  += '<option value="Champaign County">Champaign County</option>';
+            county_options_str  += '<option value="Chariton County">Chariton County</option>';
+            county_options_str  += '<option value="Charleston County">Charleston County</option>';
+            county_options_str  += '<option value="Charlevoix County">Charlevoix County</option>';
+            county_options_str  += '<option value="Charlotte County">Charlotte County</option>';
+            county_options_str  += '<option value="Chatham County">Chatham County</option>';
+            county_options_str  += '<option value="Cheatham County">Cheatham County</option>';
+            county_options_str  += '<option value="Cheboygan County">Cheboygan County</option>';
+            county_options_str  += '<option value="Chelan County">Chelan County</option>';
+            county_options_str  += '<option value="Cherokee County">Cherokee County</option>';
+            county_options_str  += '<option value="Cherry County">Cherry County</option>';
+            county_options_str  += '<option value="Chesapeake City County">Chesapeake City County</option>';
+            county_options_str  += '<option value="Chester County">Chester County</option>';
+            county_options_str  += '<option value="Chesterfield County">Chesterfield County</option>';
+            county_options_str  += '<option value="Chickasaw County">Chickasaw County</option>';
+            county_options_str  += '<option value="Chicot County">Chicot County</option>';
+            county_options_str  += '<option value="Chilton County">Chilton County</option>';
+            county_options_str  += '<option value="Chippewa County">Chippewa County</option>';
+            county_options_str  += '<option value="Choctaw County">Choctaw County</option>';
+            county_options_str  += '<option value="Christian County">Christian County</option>';
+            county_options_str  += '<option value="Citrus County">Citrus County</option>';
+            county_options_str  += '<option value="Clackamas County">Clackamas County</option>';
+            county_options_str  += '<option value="Clallam County">Clallam County</option>';
+            county_options_str  += '<option value="Clark County">Clark County</option>';
+            county_options_str  += '<option value="Clarke County">Clarke County</option>';
+            county_options_str  += '<option value="Clatsop County">Clatsop County</option>';
+            county_options_str  += '<option value="Clay County">Clay County</option>';
+            county_options_str  += '<option value="Clayton County">Clayton County</option>';
+            county_options_str  += '<option value="Clear Creek County">Clear Creek County</option>';
+            county_options_str  += '<option value="Clearfield County">Clearfield County</option>';
+            county_options_str  += '<option value="Clearwater County">Clearwater County</option>';
+            county_options_str  += '<option value="Cleburne County">Cleburne County</option>';
+            county_options_str  += '<option value="Clermont County">Clermont County</option>';
+            county_options_str  += '<option value="Cleveland County">Cleveland County</option>';
+            county_options_str  += '<option value="Clinch County">Clinch County</option>';
+            county_options_str  += '<option value="Clinton County">Clinton County</option>';
+            county_options_str  += '<option value="Cobb County">Cobb County</option>';
+            county_options_str  += '<option value="Cochise County">Cochise County</option>';
+            county_options_str  += '<option value="Coconino County">Coconino County</option>';
+            county_options_str  += '<option value="Coffee County">Coffee County</option>';
+            county_options_str  += '<option value="Coffey County">Coffey County</option>';
+            county_options_str  += '<option value="Coke County">Coke County</option>';
+            county_options_str  += '<option value="Colbert County">Colbert County</option>';
+            county_options_str  += '<option value="Colfax County">Colfax County</option>';
+            county_options_str  += '<option value="Colleton County">Colleton County</option>';
+            county_options_str  += '<option value="Collier County">Collier County</option>';
+            county_options_str  += '<option value="Colquitt County">Colquitt County</option>';
+            county_options_str  += '<option value="Columbia County">Columbia County</option>';
+            county_options_str  += '<option value="Columbiana County">Columbiana County</option>';
+            county_options_str  += '<option value="Comal County">Comal County</option>';
+            county_options_str  += '<option value="Comanche County">Comanche County</option>';
+            county_options_str  += '<option value="Conecuh County">Conecuh County</option>';
+            county_options_str  += '<option value="Conejos County">Conejos County</option>';
+            county_options_str  += '<option value="Cook County">Cook County</option>';
+            county_options_str  += '<option value="Cooke County">Cooke County</option>';
+            county_options_str  += '<option value="Cooper County">Cooper County</option>';
+            county_options_str  += '<option value="Coos County">Coos County</option>';
+            county_options_str  += '<option value="Cordova-McCarthy County">Cordova-McCarthy County</option>';
+            county_options_str  += '<option value="Coryell County">Coryell County</option>';
+            county_options_str  += '<option value="Coshocton County">Coshocton County</option>';
+            county_options_str  += '<option value="Costilla County">Costilla County</option>';
+            county_options_str  += '<option value="Covington County">Covington County</option>';
+            county_options_str  += '<option value="Coweta County">Coweta County</option>';
+            county_options_str  += '<option value="Cowlitz County">Cowlitz County</option>';
+            county_options_str  += '<option value="Crawford County">Crawford County</option>';
+            county_options_str  += '<option value="Creek County">Creek County</option>';
+            county_options_str  += '<option value="Crisp County">Crisp County</option>';
+            county_options_str  += '<option value="Crittenden County">Crittenden County</option>';
+            county_options_str  += '<option value="Crockett County">Crockett County</option>';
+            county_options_str  += '<option value="Crook County">Crook County</option>';
+            county_options_str  += '<option value="Crow Wing County">Crow Wing County</option>';
+            county_options_str  += '<option value="Cullman County">Cullman County</option>';
+            county_options_str  += '<option value="Cumberland County">Cumberland County</option>';
+            county_options_str  += '<option value="Curry County">Curry County</option>';
+            county_options_str  += '<option value="Custer County">Custer County</option>';
+            county_options_str  += '<option value="Dade County">Dade County</option>';
+            county_options_str  += '<option value="Daggett County">Daggett County</option>';
+            county_options_str  += '<option value="Dakota County">Dakota County</option>';
+            county_options_str  += '<option value="Dale County">Dale County</option>';
+            county_options_str  += '<option value="Dallas County">Dallas County</option>';
+            county_options_str  += '<option value="Dane County">Dane County</option>';
+            county_options_str  += '<option value="Darlington County">Darlington County</option>';
+            county_options_str  += '<option value="Davidson County">Davidson County</option>';
+            county_options_str  += '<option value="Davie County">Davie County</option>';
+            county_options_str  += '<option value="Daviess County">Daviess County</option>';
+            county_options_str  += '<option value="Davis County">Davis County</option>';
+            county_options_str  += '<option value="Dawes County">Dawes County</option>';
+            county_options_str  += '<option value="De Witt County">De Witt County</option>';
+            county_options_str  += '<option value="Dearborn County">Dearborn County</option>';
+            county_options_str  += '<option value="Decatur County">Decatur County</option>';
+            county_options_str  += '<option value="Defiance County">Defiance County</option>';
+            county_options_str  += '<option value="Del Norte County">Del Norte County</option>';
+            county_options_str  += '<option value="Delaware County">Delaware County</option>';
+            county_options_str  += '<option value="Delta County">Delta County</option>';
+            county_options_str  += '<option value="Dent County">Dent County</option>';
+            county_options_str  += '<option value="Denton County">Denton County</option>';
+            county_options_str  += '<option value="Deschutes County">Deschutes County</option>';
+            county_options_str  += '<option value="Desha County">Desha County</option>';
+            county_options_str  += '<option value="Dickens County">Dickens County</option>';
+            county_options_str  += '<option value="Dickenson County">Dickenson County</option>';
+            county_options_str  += '<option value="Dickinson County">Dickinson County</option>';
+            county_options_str  += '<option value="Dickson County">Dickson County</option>';
+            county_options_str  += '<option value="Dixie County">Dixie County</option>';
+            county_options_str  += '<option value="Dodge County">Dodge County</option>';
+            county_options_str  += '<option value="Dolores County">Dolores County</option>';
+            county_options_str  += '<option value="Door County">Door County</option>';
+            county_options_str  += '<option value="Dorchester County">Dorchester County</option>';
+            county_options_str  += '<option value="Dougherty County">Dougherty County</option>';
+            county_options_str  += '<option value="Douglas County">Douglas County</option>';
+            county_options_str  += '<option value="Drew County">Drew County</option>';
+            county_options_str  += '<option value="Du Page County">Du Page County</option>';
+            county_options_str  += '<option value="Dubuque County">Dubuque County</option>';
+            county_options_str  += '<option value="Duchesne County">Duchesne County</option>';
+            county_options_str  += '<option value="Dunn County">Dunn County</option>';
+            county_options_str  += '<option value="Duplin County">Duplin County</option>';
+            county_options_str  += '<option value="Dutchess County">Dutchess County</option>';
+            county_options_str  += '<option value="Duval County">Duval County</option>';
+            county_options_str  += '<option value="Dyer County">Dyer County</option>';
+            county_options_str  += '<option value="Eagle County">Eagle County</option>';
+            county_options_str  += '<option value="East Baton Rouge Parish">East Baton Rouge Parish</option>';
+            county_options_str  += '<option value="East Feliciana Parish">East Feliciana Parish</option>';
+            county_options_str  += '<option value="Eastland County">Eastland County</option>';
+            county_options_str  += '<option value="Edwards County">Edwards County</option>';
+            county_options_str  += '<option value="Effingham County">Effingham County</option>';
+            county_options_str  += '<option value="El Dorado County">El Dorado County</option>';
+            county_options_str  += '<option value="El Paso County">El Paso County</option>';
+            county_options_str  += '<option value="Elbert County">Elbert County</option>';
+            county_options_str  += '<option value="Elk County">Elk County</option>';
+            county_options_str  += '<option value="Elliott County">Elliott County</option>';
+            county_options_str  += '<option value="Ellis County">Ellis County</option>';
+            county_options_str  += '<option value="Elmore County">Elmore County</option>';
+            county_options_str  += '<option value="Emanuel County">Emanuel County</option>';
+            county_options_str  += '<option value="Emery County">Emery County</option>';
+            county_options_str  += '<option value="Erath County">Erath County</option>';
+            county_options_str  += '<option value="Erie County">Erie County</option>';
+            county_options_str  += '<option value="Escambia County">Escambia County</option>';
+            county_options_str  += '<option value="Esmeralda County">Esmeralda County</option>';
+            county_options_str  += '<option value="Essex County">Essex County</option>';
+            county_options_str  += '<option value="Etowa County">Etowa County</option>';
+            county_options_str  += '<option value="Fairbanks County">Fairbanks County</option>';
+            county_options_str  += '<option value="Fairfax County">Fairfax County</option>';
+            county_options_str  += '<option value="Fairfield County">Fairfield County</option>';
+            county_options_str  += '<option value="Fannin County">Fannin County</option>';
+            county_options_str  += '<option value="Faulkner County">Faulkner County</option>';
+            county_options_str  += '<option value="Fayette County">Fayette County</option>';
+            county_options_str  += '<option value="Fentress County">Fentress County</option>';
+            county_options_str  += '<option value="Ferry County">Ferry County</option>';
+            county_options_str  += '<option value="Fillmore County">Fillmore County</option>';
+            county_options_str  += '<option value="Flagler County">Flagler County</option>';
+            county_options_str  += '<option value="Flathead County">Flathead County</option>';
+            county_options_str  += '<option value="Fleming County">Fleming County</option>';
+            county_options_str  += '<option value="Florence County">Florence County</option>';
+            county_options_str  += '<option value="Floyd County">Floyd County</option>';
+            county_options_str  += '<option value="Forest County">Forest County</option>';
+            county_options_str  += '<option value="Franklin County">Franklin County</option>';
+            county_options_str  += '<option value="Franklin Parish">Franklin Parish</option>';
+            county_options_str  += '<option value="Freestone County">Freestone County</option>';
+            county_options_str  += '<option value="Fremont County">Fremont County</option>';
+            county_options_str  += '<option value="Fresno County">Fresno County</option>';
+            county_options_str  += '<option value="Fulton County">Fulton County</option>';
+            county_options_str  += '<option value="Gadsden County">Gadsden County</option>';
+            county_options_str  += '<option value="Gage County">Gage County</option>';
+            county_options_str  += '<option value="Gallatin County">Gallatin County</option>';
+            county_options_str  += '<option value="Gallia County">Gallia County</option>';
+            county_options_str  += '<option value="Garfield County">Garfield County</option>';
+            county_options_str  += '<option value="Garland County">Garland County</option>';
+            county_options_str  += '<option value="Garrett County">Garrett County</option>';
+            county_options_str  += '<option value="Gasconade County">Gasconade County</option>';
+            county_options_str  += '<option value="Geary County">Geary County</option>';
+            county_options_str  += '<option value="Geauga County">Geauga County</option>';
+            county_options_str  += '<option value="George County">George County</option>';
+            county_options_str  += '<option value="Gibson County">Gibson County</option>';
+            county_options_str  += '<option value="Gila County">Gila County</option>';
+            county_options_str  += '<option value="Gilchrist County">Gilchrist County</option>';
+            county_options_str  += '<option value="Giles County">Giles County</option>';
+            county_options_str  += '<option value="Gilmer County">Gilmer County</option>';
+            county_options_str  += '<option value="Glacier County">Glacier County</option>';
+            county_options_str  += '<option value="Gladwin County">Gladwin County</option>';
+            county_options_str  += '<option value="Glynn County">Glynn County</option>';
+            county_options_str  += '<option value="Gogebic County">Gogebic County</option>';
+            county_options_str  += '<option value="Gonzales County">Gonzales County</option>';
+            county_options_str  += '<option value="Graham County">Graham County</option>';
+            county_options_str  += '<option value="Grainger County">Grainger County</option>';
+            county_options_str  += '<option value="Grand Traverse County">Grand Traverse County</option>';
+            county_options_str  += '<option value="Granite County">Granite County</option>';
+            county_options_str  += '<option value="Grant County">Grant County</option>';
+            county_options_str  += '<option value="Grant Parish">Grant Parish</option>';
+            county_options_str  += '<option value="Grays Harbor County">Grays Harbor County</option>';
+            county_options_str  += '<option value="Grayson County">Grayson County</option>';
+            county_options_str  += '<option value="Greenbrier County">Greenbrier County</option>';
+            county_options_str  += '<option value="Greene County">Greene County</option>';
+            county_options_str  += '<option value="Greenlee County">Greenlee County</option>';
+            county_options_str  += '<option value="Greenup County">Greenup County</option>';
+            county_options_str  += '<option value="Gregg County">Gregg County</option>';
+            county_options_str  += '<option value="Gregory County">Gregory County</option>';
+            county_options_str  += '<option value="Grundy County">Grundy County</option>';
+            county_options_str  += '<option value="Guadalupe County">Guadalupe County</option>';
+            county_options_str  += '<option value="Guernsey County">Guernsey County</option>';
+            county_options_str  += '<option value="Gulf County">Gulf County</option>';
+            county_options_str  += '<option value="Gunnison County">Gunnison County</option>';
+            county_options_str  += '<option value="Gwinnett County">Gwinnett County</option>';
+            county_options_str  += '<option value="Habersham County">Habersham County</option>';
+            county_options_str  += '<option value="Halifax County">Halifax County</option>';
+            county_options_str  += '<option value="Hall County">Hall County</option>';
+            county_options_str  += '<option value="Hamilton County">Hamilton County</option>';
+            county_options_str  += '<option value="Hampden County">Hampden County</option>';
+            county_options_str  += '<option value="Hampshire County">Hampshire County</option>';
+            county_options_str  += '<option value="Hancock County">Hancock County</option>';
+            county_options_str  += '<option value="Haralson County">Haralson County</option>';
+            county_options_str  += '<option value="Hardeman County">Hardeman County</option>';
+            county_options_str  += '<option value="Hardin County">Hardin County</option>';
+            county_options_str  += '<option value="Harford County">Harford County</option>';
+            county_options_str  += '<option value="Harlan County">Harlan County</option>';
+            county_options_str  += '<option value="Harmon County">Harmon County</option>';
+            county_options_str  += '<option value="Harney County">Harney County</option>';
+            county_options_str  += '<option value="Harrison County">Harrison County</option>';
+            county_options_str  += '<option value="Hartford County">Hartford County</option>';
+            county_options_str  += '<option value="Hawkins County">Hawkins County</option>';
+            county_options_str  += '<option value="Haywood County">Haywood County</option>';
+            county_options_str  += '<option value="Heard County">Heard County</option>';
+            county_options_str  += '<option value="Hemphill County">Hemphill County</option>';
+            county_options_str  += '<option value="Hempstead County">Hempstead County</option>';
+            county_options_str  += '<option value="Henderson County">Henderson County</option>';
+            county_options_str  += '<option value="Hendry County">Hendry County</option>';
+            county_options_str  += '<option value="Henry County">Henry County</option>';
+            county_options_str  += '<option value="Hernando County">Hernando County</option>';
+            county_options_str  += '<option value="Hickman County">Hickman County</option>';
+            county_options_str  += '<option value="Highland County">Highland County</option>';
+            county_options_str  += '<option value="Highlands County">Highlands County</option>';
+            county_options_str  += '<option value="Hillsborough County">Hillsborough County</option>';
+            county_options_str  += '<option value="Hillsdale County">Hillsdale County</option>';
+            county_options_str  += '<option value="Hinds County">Hinds County</option>';
+            county_options_str  += '<option value="Hinsdale County">Hinsdale County</option>';
+            county_options_str  += '<option value="Hocking County">Hocking County</option>';
+            county_options_str  += '<option value="Hoke County">Hoke County</option>';
+            county_options_str  += '<option value="Holmes County">Holmes County</option>';
+            county_options_str  += '<option value="Hood County">Hood County</option>';
+            county_options_str  += '<option value="Hood River County">Hood River County</option>';
+            county_options_str  += '<option value="Hopkins County">Hopkins County</option>';
+            county_options_str  += '<option value="Horry County">Horry County</option>';
+            county_options_str  += '<option value="Hot Spring County">Hot Spring County</option>';
+            county_options_str  += '<option value="Houston County">Houston County</option>';
+            county_options_str  += '<option value="Howard County">Howard County</option>';
+            county_options_str  += '<option value="Howell County">Howell County</option>';
+            county_options_str  += '<option value="Hubbard County">Hubbard County</option>';
+            county_options_str  += '<option value="Huerfano County">Huerfano County</option>';
+            county_options_str  += '<option value="Hughes County">Hughes County</option>';
+            county_options_str  += '<option value="Humboldt County">Humboldt County</option>';
+            county_options_str  += '<option value="Hunt County">Hunt County</option>';
+            county_options_str  += '<option value="Hunterdon County">Hunterdon County</option>';
+            county_options_str  += '<option value="Huntingdon County">Huntingdon County</option>';
+            county_options_str  += '<option value="Huntington County">Huntington County</option>';
+            county_options_str  += '<option value="Huron County">Huron County</option>';
+            county_options_str  += '<option value="Idaho County">Idaho County</option>';
+            county_options_str  += '<option value="Independence County">Independence County</option>';
+            county_options_str  += '<option value="Indian River County">Indian River County</option>';
+            county_options_str  += '<option value="Indiana County">Indiana County</option>';
+            county_options_str  += '<option value="Inyo County">Inyo County</option>';
+            county_options_str  += '<option value="Ionia County">Ionia County</option>';
+            county_options_str  += '<option value="Iosco County">Iosco County</option>';
+            county_options_str  += '<option value="Iowa County">Iowa County</option>';
+            county_options_str  += '<option value="Iron County">Iron County</option>';
+            county_options_str  += '<option value="Iroquois County">Iroquois County</option>';
+            county_options_str  += '<option value="Isabella County">Isabella County</option>';
+            county_options_str  += '<option value="Island County">Island County</option>';
+            county_options_str  += '<option value="Itasca County">Itasca County</option>';
+            county_options_str  += '<option value="Jack County">Jack County</option>';
+            county_options_str  += '<option value="Jackson County">Jackson County</option>';
+            county_options_str  += '<option value="James City County">James City County</option>';
+            county_options_str  += '<option value="Jasper County">Jasper County</option>';
+            county_options_str  += '<option value="Jeffdavis County">Jeffdavis County</option>';
+            county_options_str  += '<option value="Jefferson County">Jefferson County</option>';
+            county_options_str  += '<option value="Jefferson Davis Parish">Jefferson Davis Parish</option>';
+            county_options_str  += '<option value="Jefferson Parish">Jefferson Parish</option>';
+            county_options_str  += '<option value="Jersey County">Jersey County</option>';
+            county_options_str  += '<option value="Johnson County">Johnson County</option>';
+            county_options_str  += '<option value="Johnston County">Johnston County</option>';
+            county_options_str  += '<option value="Jones County">Jones County</option>';
+            county_options_str  += '<option value="Josephine County">Josephine County</option>';
+            county_options_str  += '<option value="Kalamazoo County">Kalamazoo County</option>';
+            county_options_str  += '<option value="Kalkaska County">Kalkaska County</option>';
+            county_options_str  += '<option value="Kanawha County">Kanawha County</option>';
+            county_options_str  += '<option value="Kane County">Kane County</option>';
+            county_options_str  += '<option value="Kankakee County">Kankakee County</option>';
+            county_options_str  += '<option value="Kendall County">Kendall County</option>';
+            county_options_str  += '<option value="Kent County">Kent County</option>';
+            county_options_str  += '<option value="Kern County">Kern County</option>';
+            county_options_str  += '<option value="Keweenaw County">Keweenaw County</option>';
+            county_options_str  += '<option value="King County">King County</option>';
+            county_options_str  += '<option value="Kingman County">Kingman County</option>';
+            county_options_str  += '<option value="Kinney County">Kinney County</option>';
+            county_options_str  += '<option value="Kitsap County">Kitsap County</option>';
+            county_options_str  += '<option value="Kittitas County">Kittitas County</option>';
+            county_options_str  += '<option value="Klamath County">Klamath County</option>';
+            county_options_str  += '<option value="Klickitat County">Klickitat County</option>';
+            county_options_str  += '<option value="Knox County">Knox County</option>';
+            county_options_str  += '<option value="Kootenai County">Kootenai County</option>';
+            county_options_str  += '<option value="Kosciusko County">Kosciusko County</option>';
+            county_options_str  += '<option value="La Crosse County">La Crosse County</option>';
+            county_options_str  += '<option value="La Plata County">La Plata County</option>';
+            county_options_str  += '<option value="La Salle County">La Salle County</option>';
+            county_options_str  += '<option value="La Salle Parish">La Salle Parish</option>';
+            county_options_str  += '<option value="Labette County">Labette County</option>';
+            county_options_str  += '<option value="Lafayette County">Lafayette County</option>';
+            county_options_str  += '<option value="Lake County">Lake County</option>';
+            county_options_str  += '<option value="Lamar County">Lamar County</option>';
+            county_options_str  += '<option value="Lampasas County">Lampasas County</option>';
+            county_options_str  += '<option value="Lancaster County">Lancaster County</option>';
+            county_options_str  += '<option value="Lane County">Lane County</option>';
+            county_options_str  += '<option value="Langlade County">Langlade County</option>';
+            county_options_str  += '<option value="Lanier County">Lanier County</option>';
+            county_options_str  += '<option value="Larimer County">Larimer County</option>';
+            county_options_str  += '<option value="Larue County">Larue County</option>';
+            county_options_str  += '<option value="Las Animas County">Las Animas County</option>';
+            county_options_str  += '<option value="Lassen County">Lassen County</option>';
+            county_options_str  += '<option value="Latah County">Latah County</option>';
+            county_options_str  += '<option value="Latimer County">Latimer County</option>';
+            county_options_str  += '<option value="Lauderdale County">Lauderdale County</option>';
+            county_options_str  += '<option value="Laurel County">Laurel County</option>';
+            county_options_str  += '<option value="Laurens County">Laurens County</option>';
+            county_options_str  += '<option value="Lawrence County">Lawrence County</option>';
+            county_options_str  += '<option value="Le Flore County">Le Flore County</option>';
+            county_options_str  += '<option value="Leavenworth County">Leavenworth County</option>';
+            county_options_str  += '<option value="Lee County">Lee County</option>';
+            county_options_str  += '<option value="Leelanau County">Leelanau County</option>';
+            county_options_str  += '<option value="Lemhi County">Lemhi County</option>';
+            county_options_str  += '<option value="Lenawee County">Lenawee County</option>';
+            county_options_str  += '<option value="Leon County">Leon County</option>';
+            county_options_str  += '<option value="Letcher County">Letcher County</option>';
+            county_options_str  += '<option value="Levy County">Levy County</option>';
+            county_options_str  += '<option value="Lewis And Clark County">Lewis And Clark County</option>';
+            county_options_str  += '<option value="Lewis County">Lewis County</option>';
+            county_options_str  += '<option value="Liberty County">Liberty County</option>';
+            county_options_str  += '<option value="Licking County">Licking County</option>';
+            county_options_str  += '<option value="Limestone County">Limestone County</option>';
+            county_options_str  += '<option value="Lincoln County">Lincoln County</option>';
+            county_options_str  += '<option value="Linn County">Linn County</option>';
+            county_options_str  += '<option value="Litchfield County">Litchfield County</option>';
+            county_options_str  += '<option value="Little River County">Little River County</option>';
+            county_options_str  += '<option value="Livingston County">Livingston County</option>';
+            county_options_str  += '<option value="Livingston Parish">Livingston Parish</option>';
+            county_options_str  += '<option value="Logan County">Logan County</option>';
+            county_options_str  += '<option value="Long County">Long County</option>';
+            county_options_str  += '<option value="Lonoke County">Lonoke County</option>';
+            county_options_str  += '<option value="Lorain County">Lorain County</option>';
+            county_options_str  += '<option value="Los Angeles County">Los Angeles County</option>';
+            county_options_str  += '<option value="Loudon County">Loudon County</option>';
+            county_options_str  += '<option value="Loudoun County">Loudoun County</option>';
+            county_options_str  += '<option value="Louisa County">Louisa County</option>';
+            county_options_str  += '<option value="Love County">Love County</option>';
+            county_options_str  += '<option value="Lowndes County">Lowndes County</option>';
+            county_options_str  += '<option value="Lubbock County">Lubbock County</option>';
+            county_options_str  += '<option value="Luce County">Luce County</option>';
+            county_options_str  += '<option value="Luzerne County">Luzerne County</option>';
+            county_options_str  += '<option value="Lycoming County">Lycoming County</option>';
+            county_options_str  += '<option value="Mackinac County">Mackinac County</option>';
+            county_options_str  += '<option value="Macon County">Macon County</option>';
+            county_options_str  += '<option value="Macoupin County">Macoupin County</option>';
+            county_options_str  += '<option value="Madera County">Madera County</option>';
+            county_options_str  += '<option value="Madison County">Madison County</option>';
+            county_options_str  += '<option value="Magoffin County">Magoffin County</option>';
+            county_options_str  += '<option value="Mahoning County">Mahoning County</option>';
+            county_options_str  += '<option value="Manatee County">Manatee County</option>';
+            county_options_str  += '<option value="Manistee County">Manistee County</option>';
+            county_options_str  += '<option value="Manitowoc County">Manitowoc County</option>';
+            county_options_str  += '<option value="Marathon County">Marathon County</option>';
+            county_options_str  += '<option value="Maricopa County">Maricopa County</option>';
+            county_options_str  += '<option value="Marinette County">Marinette County</option>';
+            county_options_str  += '<option value="Marion County">Marion County</option>';
+            county_options_str  += '<option value="Mariposa County">Mariposa County</option>';
+            county_options_str  += '<option value="Marquette County">Marquette County</option>';
+            county_options_str  += '<option value="Marshall County">Marshall County</option>';
+            county_options_str  += '<option value="Martin County">Martin County</option>';
+            county_options_str  += '<option value="Mason County">Mason County</option>';
+            county_options_str  += '<option value="Massac County">Massac County</option>';
+            county_options_str  += '<option value="Matagorda County">Matagorda County</option>';
+            county_options_str  += '<option value="Mayes County">Mayes County</option>';
+            county_options_str  += '<option value="McClain County">McClain County</option>';
+            county_options_str  += '<option value="McCreary County">McCreary County</option>';
+            county_options_str  += '<option value="McCurtain County">McCurtain County</option>';
+            county_options_str  += '<option value="McDonald County">McDonald County</option>';
+            county_options_str  += '<option value="McDonough County">McDonough County</option>';
+            county_options_str  += '<option value="McDowell County">McDowell County</option>';
+            county_options_str  += '<option value="McHenry County">McHenry County</option>';
+            county_options_str  += '<option value="McIntosh County">McIntosh County</option>';
+            county_options_str  += '<option value="McKean County">McKean County</option>';
+            county_options_str  += '<option value="McKenzie County">McKenzie County</option>';
+            county_options_str  += '<option value="McKinley County">McKinley County</option>';
+            county_options_str  += '<option value="McLean County">McLean County</option>';
+            county_options_str  += '<option value="McPherson County">McPherson County</option>';
+            county_options_str  += '<option value="Mcdowell County">Mcdowell County</option>';
+            county_options_str  += '<option value="Meade County">Meade County</option>';
+            county_options_str  += '<option value="Meagher County">Meagher County</option>';
+            county_options_str  += '<option value="Mecklenburg County">Mecklenburg County</option>';
+            county_options_str  += '<option value="Mecosta County">Mecosta County</option>';
+            county_options_str  += '<option value="Medina County">Medina County</option>';
+            county_options_str  += '<option value="Mendocino County">Mendocino County</option>';
+            county_options_str  += '<option value="Menominee County">Menominee County</option>';
+            county_options_str  += '<option value="Mercer County">Mercer County</option>';
+            county_options_str  += '<option value="Merrimack County">Merrimack County</option>';
+            county_options_str  += '<option value="Mesa County">Mesa County</option>';
+            county_options_str  += '<option value="Miami County">Miami County</option>';
+            county_options_str  += '<option value="Middlesex County">Middlesex County</option>';
+            county_options_str  += '<option value="Midland County">Midland County</option>';
+            county_options_str  += '<option value="Mifflin County">Mifflin County</option>';
+            county_options_str  += '<option value="Miller County">Miller County</option>';
+            county_options_str  += '<option value="Mills County">Mills County</option>';
+            county_options_str  += '<option value="Milwaukee County">Milwaukee County</option>';
+            county_options_str  += '<option value="Mineral County">Mineral County</option>';
+            county_options_str  += '<option value="Mississippi County">Mississippi County</option>';
+            county_options_str  += '<option value="Missoula County">Missoula County</option>';
+            county_options_str  += '<option value="Mitchell County">Mitchell County</option>';
+            county_options_str  += '<option value="Mobile County">Mobile County</option>';
+            county_options_str  += '<option value="Modoc County">Modoc County</option>';
+            county_options_str  += '<option value="Moffat County">Moffat County</option>';
+            county_options_str  += '<option value="Mohave County">Mohave County</option>';
+            county_options_str  += '<option value="Monmouth County">Monmouth County</option>';
+            county_options_str  += '<option value="Mono County">Mono County</option>';
+            county_options_str  += '<option value="Monongalia County">Monongalia County</option>';
+            county_options_str  += '<option value="Monroe County">Monroe County</option>';
+            county_options_str  += '<option value="Montcalm County">Montcalm County</option>';
+            county_options_str  += '<option value="Monterey County">Monterey County</option>';
+            county_options_str  += '<option value="Montezuma County">Montezuma County</option>';
+            county_options_str  += '<option value="Montgomery County">Montgomery County</option>';
+            county_options_str  += '<option value="Montmorency County">Montmorency County</option>';
+            county_options_str  += '<option value="Montrose County">Montrose County</option>';
+            county_options_str  += '<option value="Morgan County">Morgan County</option>';
+            county_options_str  += '<option value="Morris County">Morris County</option>';
+            county_options_str  += '<option value="Morrow County">Morrow County</option>';
+            county_options_str  += '<option value="Moultrie County">Moultrie County</option>';
+            county_options_str  += '<option value="Mountrail County">Mountrail County</option>';
+            county_options_str  += '<option value="Multnomah County">Multnomah County</option>';
+            county_options_str  += '<option value="Murray County">Murray County</option>';
+            county_options_str  += '<option value="Muskegon County">Muskegon County</option>';
+            county_options_str  += '<option value="Muskingum County">Muskingum County</option>';
+            county_options_str  += '<option value="Muskogee County">Muskogee County</option>';
+            county_options_str  += '<option value="Nacogdoches County">Nacogdoches County</option>';
+            county_options_str  += '<option value="Nash County">Nash County</option>';
+            county_options_str  += '<option value="Nassau County">Nassau County</option>';
+            county_options_str  += '<option value="Natchitoches Parish">Natchitoches Parish</option>';
+            county_options_str  += '<option value="Navajo County">Navajo County</option>';
+            county_options_str  += '<option value="Nelson County">Nelson County</option>';
+            county_options_str  += '<option value="Neosho County">Neosho County</option>';
+            county_options_str  += '<option value="Nevada County">Nevada County</option>';
+            county_options_str  += '<option value="New Haven County">New Haven County</option>';
+            county_options_str  += '<option value="New London County">New London County</option>';
+            county_options_str  += '<option value="Newberry County">Newberry County</option>';
+            county_options_str  += '<option value="Newton County">Newton County</option>';
+            county_options_str  += '<option value="Nez Perce County">Nez Perce County</option>';
+            county_options_str  += '<option value="Niagara County">Niagara County</option>';
+            county_options_str  += '<option value="Nicholas County">Nicholas County</option>';
+            county_options_str  += '<option value="Noble County">Noble County</option>';
+            county_options_str  += '<option value="Northampton County">Northampton County</option>';
+            county_options_str  += '<option value="Nottoway County">Nottoway County</option>';
+            county_options_str  += '<option value="Nowata County">Nowata County</option>';
+            county_options_str  += '<option value="Obion County">Obion County</option>';
+            county_options_str  += '<option value="Ocean County">Ocean County</option>';
+            county_options_str  += '<option value="Oceana County">Oceana County</option>';
+            county_options_str  += '<option value="Oconee County">Oconee County</option>';
+            county_options_str  += '<option value="Ogemaw County">Ogemaw County</option>';
+            county_options_str  += '<option value="Ogle County">Ogle County</option>';
+            county_options_str  += '<option value="Ohio County">Ohio County</option>';
+            county_options_str  += '<option value="Okaloosa County">Okaloosa County</option>';
+            county_options_str  += '<option value="Okanogan County">Okanogan County</option>';
+            county_options_str  += '<option value="Okeechobee County">Okeechobee County</option>';
+            county_options_str  += '<option value="Oklahoma County">Oklahoma County</option>';
+            county_options_str  += '<option value="Oneida County">Oneida County</option>';
+            county_options_str  += '<option value="Onondaga County">Onondaga County</option>';
+            county_options_str  += '<option value="Onslow County">Onslow County</option>';
+            county_options_str  += '<option value="Ontario County">Ontario County</option>';
+            county_options_str  += '<option value="Ontonagon County">Ontonagon County</option>';
+            county_options_str  += '<option value="Orange County">Orange County</option>';
+            county_options_str  += '<option value="Oregon County">Oregon County</option>';
+            county_options_str  += '<option value="Orleans County">Orleans County</option>';
+            county_options_str  += '<option value="Osage County">Osage County</option>';
+            county_options_str  += '<option value="Osceola County">Osceola County</option>';
+            county_options_str  += '<option value="Oscoda County">Oscoda County</option>';
+            county_options_str  += '<option value="Otero County">Otero County</option>';
+            county_options_str  += '<option value="Otsego County">Otsego County</option>';
+            county_options_str  += '<option value="Ottawa County">Ottawa County</option>';
+            county_options_str  += '<option value="Ouray County">Ouray County</option>';
+            county_options_str  += '<option value="Owyhee County">Owyhee County</option>';
+            county_options_str  += '<option value="Oxford County">Oxford County</option>';
+            county_options_str  += '<option value="Ozark County">Ozark County</option>';
+            county_options_str  += '<option value="Pacific County">Pacific County</option>';
+            county_options_str  += '<option value="Palm Beach County">Palm Beach County</option>';
+            county_options_str  += '<option value="Palo Pinto County">Palo Pinto County</option>';
+            county_options_str  += '<option value="Panola County">Panola County</option>';
+            county_options_str  += '<option value="Park County">Park County</option>';
+            county_options_str  += '<option value="Parke County">Parke County</option>';
+            county_options_str  += '<option value="Parker County">Parker County</option>';
+            county_options_str  += '<option value="Pasco County">Pasco County</option>';
+            county_options_str  += '<option value="Pasquotank County">Pasquotank County</option>';
+            county_options_str  += '<option value="Passaic County">Passaic County</option>';
+            county_options_str  += '<option value="Paulding County">Paulding County</option>';
+            county_options_str  += '<option value="Payne County">Payne County</option>';
+            county_options_str  += '<option value="Pearl River County">Pearl River County</option>';
+            county_options_str  += '<option value="Pecos County">Pecos County</option>';
+            county_options_str  += '<option value="Pemiscot County">Pemiscot County</option>';
+            county_options_str  += '<option value="Pend Oreille County">Pend Oreille County</option>';
+            county_options_str  += '<option value="Pender County">Pender County</option>';
+            county_options_str  += '<option value="Pendleton County">Pendleton County</option>';
+            county_options_str  += '<option value="Pennington County">Pennington County</option>';
+            county_options_str  += '<option value="Penobscot County">Penobscot County</option>';
+            county_options_str  += '<option value="Peoria County">Peoria County</option>';
+            county_options_str  += '<option value="Perry County">Perry County</option>';
+            county_options_str  += '<option value="Person County">Person County</option>';
+            county_options_str  += '<option value="Phelps County">Phelps County</option>';
+            county_options_str  += '<option value="Phillips County">Phillips County</option>';
+            county_options_str  += '<option value="Piatt County">Piatt County</option>';
+            county_options_str  += '<option value="Pickens County">Pickens County</option>';
+            county_options_str  += '<option value="Pierce County">Pierce County</option>';
+            county_options_str  += '<option value="Pike County">Pike County</option>';
+            county_options_str  += '<option value="Pine County">Pine County</option>';
+            county_options_str  += '<option value="Pinellas County">Pinellas County</option>';
+            county_options_str  += '<option value="Piscataquis County">Piscataquis County</option>';
+            county_options_str  += '<option value="Pitkin County">Pitkin County</option>';
+            county_options_str  += '<option value="Pittsburg County">Pittsburg County</option>';
+            county_options_str  += '<option value="Pittsylvania County">Pittsylvania County</option>';
+            county_options_str  += '<option value="Placer County">Placer County</option>';
+            county_options_str  += '<option value="Plumas County">Plumas County</option>';
+            county_options_str  += '<option value="Plymouth County">Plymouth County</option>';
+            county_options_str  += '<option value="Pocahontas County">Pocahontas County</option>';
+            county_options_str  += '<option value="Polk County">Polk County</option>';
+            county_options_str  += '<option value="Pontotoc County">Pontotoc County</option>';
+            county_options_str  += '<option value="Pope County">Pope County</option>';
+            county_options_str  += '<option value="Portage County">Portage County</option>';
+            county_options_str  += '<option value="Pottawattamie County">Pottawattamie County</option>';
+            county_options_str  += '<option value="Potter County">Potter County</option>';
+            county_options_str  += '<option value="Powell County">Powell County</option>';
+            county_options_str  += '<option value="Pratt County">Pratt County</option>';
+            county_options_str  += '<option value="Preble County">Preble County</option>';
+            county_options_str  += '<option value="Presque Isle County">Presque Isle County</option>';
+            county_options_str  += '<option value="Preston County">Preston County</option>';
+            county_options_str  += '<option value="Price County">Price County</option>';
+            county_options_str  += '<option value="Prince George County">Prince George County</option>';
+            county_options_str  += '<option value="Prince William County">Prince William County</option>';
+            county_options_str  += '<option value="Prince of Wales County">Prince of Wales County</option>';
+            county_options_str  += '<option value="Providence County">Providence County</option>';
+            county_options_str  += '<option value="Pulaski County">Pulaski County</option>';
+            county_options_str  += '<option value="Pushmataha County">Pushmataha County</option>';
+            county_options_str  += '<option value="Putnam County">Putnam County</option>';
+            county_options_str  += '<option value="Rabun County">Rabun County</option>';
+            county_options_str  += '<option value="Raleigh County">Raleigh County</option>';
+            county_options_str  += '<option value="Randall County">Randall County</option>';
+            county_options_str  += '<option value="Randolph County">Randolph County</option>';
+            county_options_str  += '<option value="Rapides Parish">Rapides Parish</option>';
+            county_options_str  += '<option value="Ravalli County">Ravalli County</option>';
+            county_options_str  += '<option value="Ray County">Ray County</option>';
+            county_options_str  += '<option value="Red River County">Red River County</option>';
+            county_options_str  += '<option value="Reynolds County">Reynolds County</option>';
+            county_options_str  += '<option value="Rhea County">Rhea County</option>';
+            county_options_str  += '<option value="Rice County">Rice County</option>';
+            county_options_str  += '<option value="Richland County">Richland County</option>';
+            county_options_str  += '<option value="Richmond County">Richmond County</option>';
+            county_options_str  += '<option value="Riley County">Riley County</option>';
+            county_options_str  += '<option value="Rio Arriba County">Rio Arriba County</option>';
+            county_options_str  += '<option value="Rio Blanco County">Rio Blanco County</option>';
+            county_options_str  += '<option value="Ripley County">Ripley County</option>';
+            county_options_str  += '<option value="Ritchie County">Ritchie County</option>';
+            county_options_str  += '<option value="Riverside County">Riverside County</option>';
+            county_options_str  += '<option value="Roanoke County">Roanoke County</option>';
+            county_options_str  += '<option value="Roberts County">Roberts County</option>';
+            county_options_str  += '<option value="Robeson County">Robeson County</option>';
+            county_options_str  += '<option value="Rock Island County">Rock Island County</option>';
+            county_options_str  += '<option value="Rockbridge County">Rockbridge County</option>';
+            county_options_str  += '<option value="Rockcastle County">Rockcastle County</option>';
+            county_options_str  += '<option value="Rockingham County">Rockingham County</option>';
+            county_options_str  += '<option value="Rockland County">Rockland County</option>';
+            county_options_str  += '<option value="Roger Mills County">Roger Mills County</option>';
+            county_options_str  += '<option value="Rogers County">Rogers County</option>';
+            county_options_str  += '<option value="Rooks County">Rooks County</option>';
+            county_options_str  += '<option value="Roosevelt County">Roosevelt County</option>';
+            county_options_str  += '<option value="Roscommon County">Roscommon County</option>';
+            county_options_str  += '<option value="Roseau County">Roseau County</option>';
+            county_options_str  += '<option value="Ross County">Ross County</option>';
+            county_options_str  += '<option value="Routt County">Routt County</option>';
+            county_options_str  += '<option value="Rowan County">Rowan County</option>';
+            county_options_str  += '<option value="Rusk County">Rusk County</option>';
+            county_options_str  += '<option value="Russell County">Russell County</option>';
+            county_options_str  += '<option value="Rutherford County">Rutherford County</option>';
+            county_options_str  += '<option value="Sabine County">Sabine County</option>';
+            county_options_str  += '<option value="Sabine Parish">Sabine Parish</option>';
+            county_options_str  += '<option value="Sac County">Sac County</option>';
+            county_options_str  += '<option value="Salem County">Salem County</option>';
+            county_options_str  += '<option value="Saline County">Saline County</option>';
+            county_options_str  += '<option value="Salt Lake County">Salt Lake County</option>';
+            county_options_str  += '<option value="Sampson County">Sampson County</option>';
+            county_options_str  += '<option value="San Augustine County">San Augustine County</option>';
+            county_options_str  += '<option value="San Bernardino County">San Bernardino County</option>';
+            county_options_str  += '<option value="San Diego County">San Diego County</option>';
+            county_options_str  += '<option value="San Jacinto County">San Jacinto County</option>';
+            county_options_str  += '<option value="San Juan County">San Juan County</option>';
+            county_options_str  += '<option value="San Luis Obispo County">San Luis Obispo County</option>';
+            county_options_str  += '<option value="San Miguel County">San Miguel County</option>';
+            county_options_str  += '<option value="Sanders County">Sanders County</option>';
+            county_options_str  += '<option value="Sandusky County">Sandusky County</option>';
+            county_options_str  += '<option value="Sangamon County">Sangamon County</option>';
+            county_options_str  += '<option value="Sanilac County">Sanilac County</option>';
+            county_options_str  += '<option value="Sanpete County">Sanpete County</option>';
+            county_options_str  += '<option value="Santa Barbara County">Santa Barbara County</option>';
+            county_options_str  += '<option value="Santa Cruz County">Santa Cruz County</option>';
+            county_options_str  += '<option value="Santa Rosa County">Santa Rosa County</option>';
+            county_options_str  += '<option value="Sarasota County">Sarasota County</option>';
+            county_options_str  += '<option value="Sarpy County">Sarpy County</option>';
+            county_options_str  += '<option value="Saunders County">Saunders County</option>';
+            county_options_str  += '<option value="Sawyer County">Sawyer County</option>';
+            county_options_str  += '<option value="Schoolcraft County">Schoolcraft County</option>';
+            county_options_str  += '<option value="Schuyler County">Schuyler County</option>';
+            county_options_str  += '<option value="Scioto County">Scioto County</option>';
+            county_options_str  += '<option value="Scott County">Scott County</option>';
+            county_options_str  += '<option value="Searcy County">Searcy County</option>';
+            county_options_str  += '<option value="Sebastian County">Sebastian County</option>';
+            county_options_str  += '<option value="Sedgwick County">Sedgwick County</option>';
+            county_options_str  += '<option value="Seminole County">Seminole County</option>';
+            county_options_str  += '<option value="Sequoyah County">Sequoyah County</option>';
+            county_options_str  += '<option value="Sevier County">Sevier County</option>';
+            county_options_str  += '<option value="Shannon County">Shannon County</option>';
+            county_options_str  += '<option value="Shasta County">Shasta County</option>';
+            county_options_str  += '<option value="Shawano County">Shawano County</option>';
+            county_options_str  += '<option value="Shawnee County">Shawnee County</option>';
+            county_options_str  += '<option value="Shelby County">Shelby County</option>';
+            county_options_str  += '<option value="Shenandoah County">Shenandoah County</option>';
+            county_options_str  += '<option value="Shoshone County">Shoshone County</option>';
+            county_options_str  += '<option value="Sierra County">Sierra County</option>';
+            county_options_str  += '<option value="Silver Bow County">Silver Bow County</option>';
+            county_options_str  += '<option value="Simpson County">Simpson County</option>';
+            county_options_str  += '<option value="Siskiyou County">Siskiyou County</option>';
+            county_options_str  += '<option value="Skagit County">Skagit County</option>';
+            county_options_str  += '<option value="Skamania County">Skamania County</option>';
+            county_options_str  += '<option value="Smith County">Smith County</option>';
+            county_options_str  += '<option value="Smyth County">Smyth County</option>';
+            county_options_str  += '<option value="Snohomish County">Snohomish County</option>';
+            county_options_str  += '<option value="Socorro County">Socorro County</option>';
+            county_options_str  += '<option value="Somerset County">Somerset County</option>';
+            county_options_str  += '<option value="Sonoma County">Sonoma County</option>';
+            county_options_str  += '<option value="Southeast Fairbanks County">Southeast Fairbanks County</option>';
+            county_options_str  += '<option value="Spartanburg County">Spartanburg County</option>';
+            county_options_str  += '<option value="Spencer County">Spencer County</option>';
+            county_options_str  += '<option value="Spokane County">Spokane County</option>';
+            county_options_str  += '<option value="St. Charles County">St. Charles County</option>';
+            county_options_str  += '<option value="St. Clair County">St. Clair County</option>';
+            county_options_str  += '<option value="St. Croix County">St. Croix County</option>';
+            county_options_str  += '<option value="St. Francis County">St. Francis County</option>';
+            county_options_str  += '<option value="St. Francois County">St. Francois County</option>';
+            county_options_str  += '<option value="St. Johns County">St. Johns County</option>';
+            county_options_str  += '<option value="St. Landry Parish">St. Landry Parish</option>';
+            county_options_str  += '<option value="St. Lawrence County">St. Lawrence County</option>';
+            county_options_str  += '<option value="St. Louis County">St. Louis County</option>';
+            county_options_str  += '<option value="Stafford County">Stafford County</option>';
+            county_options_str  += '<option value="Stanislaus County">Stanislaus County</option>';
+            county_options_str  += '<option value="Stanly County">Stanly County</option>';
+            county_options_str  += '<option value="Stark County">Stark County</option>';
+            county_options_str  += '<option value="Ste. Genevieve County">Ste. Genevieve County</option>';
+            county_options_str  += '<option value="Stearns County">Stearns County</option>';
+            county_options_str  += '<option value="Stephens County">Stephens County</option>';
+            county_options_str  += '<option value="Stephenson County">Stephenson County</option>';
+            county_options_str  += '<option value="Steuben County">Steuben County</option>';
+            county_options_str  += '<option value="Stevens County">Stevens County</option>';
+            county_options_str  += '<option value="Stewart County">Stewart County</option>';
+            county_options_str  += '<option value="Stillwater County">Stillwater County</option>';
+            county_options_str  += '<option value="Stoddard County">Stoddard County</option>';
+            county_options_str  += '<option value="Stokes County">Stokes County</option>';
+            county_options_str  += '<option value="Stone County">Stone County</option>';
+            county_options_str  += '<option value="Storey County">Storey County</option>';
+            county_options_str  += '<option value="Strafford County">Strafford County</option>';
+            county_options_str  += '<option value="Sullivan County">Sullivan County</option>';
+            county_options_str  += '<option value="Summers County">Summers County</option>';
+            county_options_str  += '<option value="Summit County">Summit County</option>';
+            county_options_str  += '<option value="Sumner County">Sumner County</option>';
+            county_options_str  += '<option value="Sumter County">Sumter County</option>';
+            county_options_str  += '<option value="Surry County">Surry County</option>';
+            county_options_str  += '<option value="Susquehanna County">Susquehanna County</option>';
+            county_options_str  += '<option value="Sussex County">Sussex County</option>';
+            county_options_str  += '<option value="Sutter County">Sutter County</option>';
+            county_options_str  += '<option value="Sutton County">Sutton County</option>';
+            county_options_str  += '<option value="Suwannee County">Suwannee County</option>';
+            county_options_str  += '<option value="Swain County">Swain County</option>';
+            county_options_str  += '<option value="Talladega County">Talladega County</option>';
+            county_options_str  += '<option value="Tallapoosa County">Tallapoosa County</option>';
+            county_options_str  += '<option value="Taney County">Taney County</option>';
+            county_options_str  += '<option value="Taos County">Taos County</option>';
+            county_options_str  += '<option value="Tarrant County">Tarrant County</option>';
+            county_options_str  += '<option value="Tattnall County">Tattnall County</option>';
+            county_options_str  += '<option value="Taylor County">Taylor County</option>';
+            county_options_str  += '<option value="Tazewell County">Tazewell County</option>';
+            county_options_str  += '<option value="Tehama County">Tehama County</option>';
+            county_options_str  += '<option value="Teller County">Teller County</option>';
+            county_options_str  += '<option value="Texas County">Texas County</option>';
+            county_options_str  += '<option value="Throckmorton County">Throckmorton County</option>';
+            county_options_str  += '<option value="Thurston County">Thurston County</option>';
+            county_options_str  += '<option value="Tillamook County">Tillamook County</option>';
+            county_options_str  += '<option value="Tillman County">Tillman County</option>';
+            county_options_str  += '<option value="Tioga County">Tioga County</option>';
+            county_options_str  += '<option value="Tippecanoe County">Tippecanoe County</option>';
+            county_options_str  += '<option value="Tipton County">Tipton County</option>';
+            county_options_str  += '<option value="Tishomingo County">Tishomingo County</option>';
+            county_options_str  += '<option value="Todd County">Todd County</option>';
+            county_options_str  += '<option value="Tom Green County">Tom Green County</option>';
+            county_options_str  += '<option value="Transylvania County">Transylvania County</option>';
+            county_options_str  += '<option value="Travis County">Travis County</option>';
+            county_options_str  += '<option value="Trempealeau County">Trempealeau County</option>';
+            county_options_str  += '<option value="Trigg County">Trigg County</option>';
+            county_options_str  += '<option value="Trinity County">Trinity County</option>';
+            county_options_str  += '<option value="Troup County">Troup County</option>';
+            county_options_str  += '<option value="Trumbull County">Trumbull County</option>';
+            county_options_str  += '<option value="Tucker County">Tucker County</option>';
+            county_options_str  += '<option value="Tulare County">Tulare County</option>';
+            county_options_str  += '<option value="Tulsa County">Tulsa County</option>';
+            county_options_str  += '<option value="Tuolumne County">Tuolumne County</option>';
+            county_options_str  += '<option value="Tuscaloosa County">Tuscaloosa County</option>';
+            county_options_str  += '<option value="Tuscarawas County">Tuscarawas County</option>';
+            county_options_str  += '<option value="Tuscola County">Tuscola County</option>';
+            county_options_str  += '<option value="Tyler County">Tyler County</option>';
+            county_options_str  += '<option value="Uinta County">Uinta County</option>';
+            county_options_str  += '<option value="Uintah County">Uintah County</option>';
+            county_options_str  += '<option value="Ulster County">Ulster County</option>';
+            county_options_str  += '<option value="Umatilla County">Umatilla County</option>';
+            county_options_str  += '<option value="Unicoi County">Unicoi County</option>';
+            county_options_str  += '<option value="Union County">Union County</option>';
+            county_options_str  += '<option value="Union Parish">Union Parish</option>';
+            county_options_str  += '<option value="Upshur County">Upshur County</option>';
+            county_options_str  += '<option value="Upson County">Upson County</option>';
+            county_options_str  += '<option value="Utah County">Utah County</option>';
+            county_options_str  += '<option value="Valdez-Chitina-Whittier County">Valdez-Chitina-Whittier County</option>';
+            county_options_str  += '<option value="Valley County">Valley County</option>';
+            county_options_str  += '<option value="Van Zandt County">Van Zandt County</option>';
+            county_options_str  += '<option value="Ventura County">Ventura County</option>';
+            county_options_str  += '<option value="Vermilion County">Vermilion County</option>';
+            county_options_str  += '<option value="Vernon County">Vernon County</option>';
+            county_options_str  += '<option value="Vernon Parish">Vernon Parish</option>';
+            county_options_str  += '<option value="Victoria County">Victoria County</option>';
+            county_options_str  += '<option value="Vilas County">Vilas County</option>';
+            county_options_str  += '<option value="Vinton County">Vinton County</option>';
+            county_options_str  += '<option value="Virginia Beach City County">Virginia Beach City County</option>';
+            county_options_str  += '<option value="Volusia County">Volusia County</option>';
+            county_options_str  += '<option value="Wabash County">Wabash County</option>';
+            county_options_str  += '<option value="Wadena County">Wadena County</option>';
+            county_options_str  += '<option value="Wahkiakum County">Wahkiakum County</option>';
+            county_options_str  += '<option value="Wakulla County">Wakulla County</option>';
+            county_options_str  += '<option value="Waldo County">Waldo County</option>';
+            county_options_str  += '<option value="Walker County">Walker County</option>';
+            county_options_str  += '<option value="Walla Walla County">Walla Walla County</option>';
+            county_options_str  += '<option value="Wallowa County">Wallowa County</option>';
+            county_options_str  += '<option value="Ward County">Ward County</option>';
+            county_options_str  += '<option value="Warren County">Warren County</option>';
+            county_options_str  += '<option value="Warrick County">Warrick County</option>';
+            county_options_str  += '<option value="Wasatch County">Wasatch County</option>';
+            county_options_str  += '<option value="Wasco County">Wasco County</option>';
+            county_options_str  += '<option value="Washington County">Washington County</option>';
+            county_options_str  += '<option value="Washington Parish">Washington Parish</option>';
+            county_options_str  += '<option value="Washita County">Washita County</option>';
+            county_options_str  += '<option value="Washoe County">Washoe County</option>';
+            county_options_str  += '<option value="Washtenaw County">Washtenaw County</option>';
+            county_options_str  += '<option value="Waukesha County">Waukesha County</option>';
+            county_options_str  += '<option value="Wayne County">Wayne County</option>';
+            county_options_str  += '<option value="Weber County">Weber County</option>';
+            county_options_str  += '<option value="Webster County">Webster County</option>';
+            county_options_str  += '<option value="Webster Parish">Webster Parish</option>';
+            county_options_str  += '<option value="Wells County">Wells County</option>';
+            county_options_str  += '<option value="Westchester County">Westchester County</option>';
+            county_options_str  += '<option value="Westmoreland County">Westmoreland County</option>';
+            county_options_str  += '<option value="Wetzel County">Wetzel County</option>';
+            county_options_str  += '<option value="Wexford County">Wexford County</option>';
+            county_options_str  += '<option value="Wharton County">Wharton County</option>';
+            county_options_str  += '<option value="Whatcom County">Whatcom County</option>';
+            county_options_str  += '<option value="White County">White County</option>';
+            county_options_str  += '<option value="Whiteside County">Whiteside County</option>';
+            county_options_str  += '<option value="Whitfield County">Whitfield County</option>';
+            county_options_str  += '<option value="Whitley County">Whitley County</option>';
+            county_options_str  += '<option value="Wilbarger County">Wilbarger County</option>';
+            county_options_str  += '<option value="Wilcox County">Wilcox County</option>';
+            county_options_str  += '<option value="Wilkes County">Wilkes County</option>';
+            county_options_str  += '<option value="Wilkinson County">Wilkinson County</option>';
+            county_options_str  += '<option value="Will County">Will County</option>';
+            county_options_str  += '<option value="Williamson County">Williamson County</option>';
+            county_options_str  += '<option value="Wilson County">Wilson County</option>';
+            county_options_str  += '<option value="Windham County">Windham County</option>';
+            county_options_str  += '<option value="Windsor County">Windsor County</option>';
+            county_options_str  += '<option value="Winnebago County">Winnebago County</option>';
+            county_options_str  += '<option value="Winneshiek County">Winneshiek County</option>';
+            county_options_str  += '<option value="Wise County">Wise County</option>';
+            county_options_str  += '<option value="Wood County">Wood County</option>';
+            county_options_str  += '<option value="Woodbury County">Woodbury County</option>';
+            county_options_str  += '<option value="Woodford County">Woodford County</option>';
+            county_options_str  += '<option value="Woodson County">Woodson County</option>';
+            county_options_str  += '<option value="Worcester County">Worcester County</option>';
+            county_options_str  += '<option value="Wright County">Wright County</option>';
+            county_options_str  += '<option value="Wyandotte County">Wyandotte County</option>';
+            county_options_str  += '<option value="Wyoming County">Wyoming County</option>';
+            county_options_str  += '<option value="Wythe County">Wythe County</option>';
+            county_options_str  += '<option value="Yadkin County">Yadkin County</option>';
+            county_options_str  += '<option value="Yakima County">Yakima County</option>';
+            county_options_str  += '<option value="Yancey County">Yancey County</option>';
+            county_options_str  += '<option value="Yavapai County">Yavapai County</option>';
+            county_options_str  += '<option value="Yell County">Yell County</option>';
+            county_options_str  += '<option value="York County">York County</option>';
+            county_options_str  += '<option value="Yuba County">Yuba County</option>';
+            sel_county.innerHTML = county_options_str;
+            div_county.appendChild(sel_county);
+            var lab_county = document.createElement('div');
+            lab_county.innerHTML = 'county';
+            lab_county.className = 'filterlabel';
+            div_county.appendChild(lab_county);
+            var reset_county = document.createElement('div');
+            reset_county.innerHTML = 'clear filter';
+            reset_county.className = 'filterlabel';
+            reset_county.onclick = function() {
+                var options = document.getElementById("sel_county").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_county.appendChild(reset_county);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_season = document.createElement('div');
+            div_season.id = "div_season";
+            div_season.className= "filterselect";
+            document.getElementById("menu").appendChild(div_season);
+            sel_season = document.createElement('select');
+            sel_season.multiple = true;
+            sel_season.size = 5;
+            sel_season.id = "sel_season";
+            var season_options_str = "<option value='' unselected></option>";
+            sel_season.onchange = function(){filterFunc()};
+            season_options_str  += '<option value="Fall">Fall</option>';
+            season_options_str  += '<option value="Spring">Spring</option>';
+            season_options_str  += '<option value="Summer">Summer</option>';
+            season_options_str  += '<option value="Unknown">Unknown</option>';
+            season_options_str  += '<option value="Winter">Winter</option>';
+            sel_season.innerHTML = season_options_str;
+            div_season.appendChild(sel_season);
+            var lab_season = document.createElement('div');
+            lab_season.innerHTML = 'season';
+            lab_season.className = 'filterlabel';
+            div_season.appendChild(lab_season);
+            var reset_season = document.createElement('div');
+            reset_season.innerHTML = 'clear filter';
+            reset_season.className = 'filterlabel';
+            reset_season.onclick = function() {
+                var options = document.getElementById("sel_season").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_season.appendChild(reset_season);
+        </script>
+    </body>
+</html>
